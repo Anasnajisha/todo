@@ -1,58 +1,40 @@
 import React from 'react'
-import Table from 'react-bootstrap/Table';
-import Container from 'react-bootstrap/Container';
-import { useState,useEffect } from 'react';
-import Loginform from './Loginform';
-export default function App() {
-  const [todo, setTodo] = useState([]);
-  useEffect(() => {
-    getData();
-  },{});
-  const getData = async () => {
-try {
-  const incomingData = await fetch(
-     "https://jsonplaceholder.typicode.com/todos"
-  );
-  const formattedData = await incomingData.json();
-  setTodo(formattedData);
-  console.log(formattedData);
-} catch (error) {
-  console.log(error);
+import { useForm } from "react-hook-form";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import  Container  from 'react-bootstrap/Container';
 
-}
-};
+export default function LoginForm() {
+
+    const { register, handleSubmit } = useForm();
+
 
   return (
     <div>
-      <loginform/>
-      <Container className='my-5 text-center'>
-        <h1 className='my-5  display-2'>Todo List</h1>
-      <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Completed </th>
-        </tr>
-      </thead>
-      <tbody>
-        {todo.map((todo,i) => (
-          <tr key={todo.id}>
-            <td>{i+1}</td>
-         
-            <td className={todo.completed ? 'text-success' : 'text-danger'}>
-            {todo.title}
-            </td>
-            <td>{todo.completed ? 'Yes ': 'No'}</td>
+        <Container className='mt-5 pt-5'>
+         <h1 className='text-center'>Login Form</h1>
+<Form>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" {...register("email")}/>
+        
+      </Form.Group>
 
-          </tr>
-        ))}
-       
-      </tbody>
-    </Table>
-    </Container>
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" {...register("password")}/>
+      </Form.Group>
+      {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Check type="checkbox" label="Check me out" />
+      </Form.Group> */}
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
 
+  </Container>
 
     </div>
-  );
+  )
 }
+
